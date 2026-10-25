@@ -118,3 +118,16 @@ def test_canadian_cities_not_namesakes_in_england():
  assert research.canadian_cities('Cambridge, Ontario, Canada')==['Cambridge']
  assert research.canadian_cities('Toronto; Vancouver')==['Toronto','Vancouver']
  assert research.canadian_cities('London, Ontario, Canada')==['London']
+
+def test_deleted_posting_stays_deleted_after_research(client):
+ item=fixture_job()
+ with store.connect() as c:oid=store.upsert_research(c,item)
+ assert client.delete('/api/opportunities/'+str(oid),headers={'X-CSRF-Token':'wrong'}).status_code==403
+ assert client.delete('/api/opportunities/'+str(oid)).status_code==200
+ assert client.get('/api/data').json['opportunities']==[]
+ with store.connect() as c:store.upsert_research(c,item)
+ assert client.get('/api/data').json['opportunities']==[]
+ backup=client.get('/api/backup').json
+ assert backup['tables']['tracking'][0]['deleted']==1
+ assert client.post('/api/restore',json=backup).status_code==200
+ assert client.get('/api/data').json['opportunities']==[]

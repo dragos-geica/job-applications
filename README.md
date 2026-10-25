@@ -109,3 +109,7 @@ Tests use isolated temporary databases and simulated changes, never production d
 The October 25 expansion checks a wider set of official Greenhouse and Lever boards for economics, analytics, operations, business systems, pricing, finance, risk, and research. `research_boards.json` registers the additional boards for weekly discovery. The employer watchlist cites current analytical hiring as evidence of a relevant employer to monitor; it does not claim a Summer 2027 internship program. Current Winter 2027 roles and graduate-only research internships are excluded from new Summer results. Stripe’s Data Analyst internship has unclear internship dates despite a specified graduation year; it is not labeled a confirmed Summer 2027 role. Lyft roles require Canadian university enrollment, which is flagged.
 
 Bank, insurer, and several professional-services sites were blocked by cloud network policy during this expansion. Additional required domains have been saved in the environment draft, but their program pages have not been verified and are not added as factual vacancies. No paid research provider is connected.
+
+### Remove an unsuitable posting
+
+Open the posting and click **Delete posting**, then confirm. It disappears from your opportunities, applications, digest and contact links. The removal is saved locally and survives research updates and backup/restore. In the Pages version it applies only to your current browser; it does not delete the shared research catalogue for other visitors. Contacts and their interaction history are retained.

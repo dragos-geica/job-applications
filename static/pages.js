@@ -8,7 +8,7 @@ const enums={application:['Saved','Preparing','Applied','Interviewing','Offer','
 async function getResearch(force=false){if(force||!publicResearch){const r=await fetch('./research.json',{cache:'no-store'});if(!r.ok)throw Error('Published research unavailable. Your saved data is still in this browser.');publicResearch=await r.json();}return publicResearch;}
 function emptyState(){return {manual:[],edits:{},tracking:{},contacts:[],interactions:[],contact_opportunities:[],settings:{},nextId:-1};}
 async function stateOperation(write,fn){const db=await pagesDB;return new Promise((resolve,reject)=>{const t=db.transaction('state',write?'readwrite':'readonly'),s=t.objectStore('state'),r=s.get('personal');let result;r.onsuccess=()=>{try{const state=r.result||emptyState();result=fn(state);if(write)s.put(state,'personal');}catch(e){reject(e);t.abort();}};t.oncomplete=()=>resolve(result);t.onerror=()=>reject(Error('Could not save browser data; export a backup and check available storage.'));});}
-function combined(s,research){return {...research,opportunities:[...research.opportunities,...s.manual].map(j=>({...j,...s.edits[j.id],...trackingDefaults,...s.tracking[j.id],opportunity_id:j.id})),contacts:s.contacts,interactions:s.interactions,contact_opportunities:s.contact_opportunities,settings:s.settings,enums,worker_active:false,pages:true};}
+function combined(s,research){const opportunities=[...research.opportunities,...s.manual].filter(j=>!s.tracking[j.id]?.deleted).map(j=>({...j,...s.edits[j.id],...trackingDefaults,...s.tracking[j.id],opportunity_id:j.id}));const visible=new Set(opportunities.map(j=>j.id));return {...research,opportunities,changes:research.changes.filter(c=>c.opportunity_id==null||visible.has(c.opportunity_id)),contacts:s.contacts,interactions:s.interactions,contact_opportunities:s.contact_opportunities.filter(l=>visible.has(l.opportunity_id)),settings:s.settings,enums,worker_active:false,pages:true};}
 async function saveDownload(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 window.pagesAPI=async function(path,method='GET',data){
  const research=await getResearch();
@@ -36,6 +36,7 @@ window.pagesAPI=async function(path,method='GET',data){
   if(path==='settings'){Object.assign(s.settings,data);return {ok:true};}
   if(parts[0]==='tracking'){s.tracking[id]={...s.tracking[id],...data};return {ok:true};}
   if(parts[0]==='opportunities'){
+   if(method==='DELETE'){if(![...research.opportunities,...s.manual].some(j=>j.id===id))throw Error('Posting not found');s.tracking[id]={...s.tracking[id],deleted:true};return {ok:true};}
    if(method==='POST'){if(!data.employer?.trim()||!data.role?.trim())throw Error('Employer and role are required');const id=s.nextId--;s.manual.push({id,city:'',category:'Economic consulting',recruiting:'Monitor',authorization:'Employer support unknown',origin:'manual',updated:new Date().toISOString(),first_discovered:new Date().toISOString(),...data});s.tracking[id]={...trackingDefaults,saved:1};return {id};}
    s.edits[id]={...s.edits[id],...data,updated:new Date().toISOString()};return {ok:true};
   }
