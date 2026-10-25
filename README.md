@@ -1,4 +1,13 @@
 # Northbound
+
+## GitHub Pages version
+
+The public website uses IndexedDB to save your application tracking, contacts, notes and interactions **only in your current browser**. There is no login or cross-device sync in this version. Clearing site data removes those records. Export JSON backups regularly through Settings; the website can also import a JSON backup from the local Python app. No personal tracking is sent to GitHub. Public employer research is shared by all visitors.
+
+The `Publish Northbound and refresh research` workflow refreshes research and deploys Pages on pushes to main, on manual runs, and each Monday around 9 a.m. America/New_York. GitHub may delay scheduled runs. Two UTC triggers handle daylight saving time, with only the correct Eastern-time run proceeding. GitHub may disable schedules in public repositories after 60 days without activity; check Actions if research becomes stale.
+
+The website’s refresh button downloads the latest published research; it does not start a server-side research job. To request research immediately, run the workflow through the repository Actions tab. The workflow builds a disposable research-only database, retains the previous public catalogue for fetch failures, and publishes no private database or tracking records. `public-research/research.json` contains only public research. Local-server instructions below still apply to the separate Python version.
+
 Private single-user internship research and application workspace for Dragoș Geica, Summer 2027. Flask, SQLite (WAL), Waitress, vanilla JavaScript. No paid services, analytics, automatic outreach or public deployment.
 
 ## Start on your Mac (first time)
