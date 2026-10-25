@@ -23,6 +23,10 @@ def init():
   CREATE TABLE IF NOT EXISTS changes(id INTEGER PRIMARY KEY,opportunity_id INTEGER REFERENCES opportunities(id) ON DELETE CASCADE,at TEXT NOT NULL,field TEXT NOT NULL,previous TEXT,current TEXT);
   INSERT OR IGNORE INTO migrations VALUES(1,datetime('now'));
   ''')
+  columns={r['name'] for r in c.execute('PRAGMA table_info(opportunities)')}
+  if 'published_date' not in columns:
+   c.execute('ALTER TABLE opportunities ADD COLUMN published_date TEXT')
+  c.execute('INSERT OR IGNORE INTO migrations VALUES(2,datetime('now'))')
   if not c.execute('SELECT 1 FROM sources').fetchone():
    sources=[('Analysis Group','https://www.analysisgroup.com/careers/'),('NERA','https://www.nera.com/why-nera.html'),('CRA','https://www.crai.com/careers/'),('Compass Lexecon','https://www.compasslexecon.com/careers/'),('Brattle','https://www.brattle.com/careers/'),('Bank of Canada','https://www.bankofcanada.ca/careers/'),('IRCC Francophone Mobility','https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/french-speaking-bilingual-workers-outside-quebec/hire.html')]
    for name,url in sources: c.execute('INSERT INTO sources(name,url,employer) VALUES(?,?,?)',(name,url,name))

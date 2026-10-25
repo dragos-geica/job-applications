@@ -72,7 +72,7 @@ def create_app(test_config=None):
    if v is not None and not isinstance(v,(str,int)):abort(400,description='Invalid field value')
    if isinstance(v,str) and len(v)>20000:abort(400,description='Field too long')
    if k in ('url','profile','resume','cover_letter') and v and urlparse(v).scheme not in ('http','https'):abort(400,description='Links must use HTTPS or HTTP')
-   if k in ('due','deadline','applied_date','interview_date','followup','date','verified') and v:
+   if k in ('due','deadline','published_date','applied_date','interview_date','followup','date','verified') and v:
     try:datetime.fromisoformat(v)
     except ValueError:abort(400,description='Invalid date')
    enums={'application':APPLICATIONS,'outreach':OUTREACH,'recruiting':RECRUITING,'authorization':AUTH}

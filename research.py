@@ -51,9 +51,10 @@ def jobs_from_html(html,url,employer):
   if not re.search(r'econom|analys|research|consult|data|recherche',title+' '+desc,re.I):continue
   confirmed=bool(re.search(r'(summer|été)\s*2027|2027\s*(summer|été)',title+' '+desc,re.I))
   deadline=j.get('applicationDeadline');deadline=deadline[:10] if isinstance(deadline,str) and re.match(r'^\d{4}-\d{2}-\d{2}',deadline) else None
+  published=j.get('datePosted');published=published[:10] if isinstance(published,str) and re.match(r'^\d{4}-\d{2}-\d{2}',published) else None
   recruiting='Confirmed Summer 2027' if confirmed else 'Dates unclear'
   if deadline and deadline<datetime.now().date().isoformat():recruiting='Closed / archived'
-  result.append(dict(employer=employer,role=title,city=', '.join(sorted(set(cities))),url=j.get('url') or url,requisition=str(j.get('identifier',{}).get('value','')) if isinstance(j.get('identifier'),dict) else '',cycle='2027' if confirmed else 'unclear',recruiting=recruiting,deadline=deadline,summary=desc[:3500],evidence=json.dumps(j,ensure_ascii=False)[:15000],requirements='Review official posting; automated extraction does not establish eligibility.',outside_quebec='Confirmed listed offices',authorization='Needs clarification',fit='Potential fit for economics research, econometrics and analytical experience; review degree requirements.'))
+  result.append(dict(employer=employer,role=title,city=', '.join(sorted(set(cities))),url=j.get('url') or url,requisition=str(j.get('identifier',{}).get('value','')) if isinstance(j.get('identifier'),dict) else '',cycle='2027' if confirmed else 'unclear',recruiting=recruiting,deadline=deadline,published_date=published,summary=desc[:3500],evidence=json.dumps(j,ensure_ascii=False)[:15000],requirements='Review official posting; automated extraction does not establish eligibility.',outside_quebec='Confirmed listed offices',authorization='Needs clarification',fit='Potential fit for economics research, econometrics and analytical experience; review degree requirements.'))
  return result
 
 def jobs_from_greenhouse(raw,employer):
@@ -64,7 +65,7 @@ def jobs_from_greenhouse(raw,employer):
   city=next((x for x in CITIES if re.search(r'\b'+re.escape(x)+r'\b',location,re.I)),None)
   if not city:continue
   desc=BeautifulSoup(html_module.unescape(job.get('content','')),'html.parser').get_text(' ',strip=True)
-  schema={'@type':'JobPosting','title':job['title'],'description':desc,'url':job['absolute_url'],'identifier':{'value':str(job.get('requisition_id') or job['id'])},'jobLocation':{'address':{'addressCountry':'CA','addressLocality':city,'addressRegion':'outside QC'}},'applicationDeadline':job.get('application_deadline')}
+  schema={'@type':'JobPosting','title':job['title'],'description':desc,'url':job['absolute_url'],'identifier':{'value':str(job.get('requisition_id') or job['id'])},'jobLocation':{'address':{'addressCountry':'CA','addressLocality':city,'addressRegion':'outside QC'}},'applicationDeadline':job.get('application_deadline'),'datePosted':job.get('first_published')}
   parsed=jobs_from_html('<script type="application/ld+json">'+json.dumps(schema)+'</script>',job['absolute_url'],employer)
   for item in parsed:
    item['requirements']=desc
