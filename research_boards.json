@@ -1,0 +1,120 @@
+[
+  {
+    "board": "stripe",
+    "employer": "Stripe",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "brex",
+    "employer": "Brex",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "lyft",
+    "employer": "Lyft",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "pinterest",
+    "employer": "Pinterest",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "robinhood",
+    "employer": "Robinhood",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "faire",
+    "employer": "Faire",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "asana",
+    "employer": "Asana",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "samsara",
+    "employer": "Samsara",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "okta",
+    "employer": "Okta",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "ripple",
+    "employer": "Ripple",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "block",
+    "employer": "Block",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "mongodb",
+    "employer": "MongoDB",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "alixpartners",
+    "employer": "AlixPartners",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "fivetran",
+    "employer": "Fivetran",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "opentable",
+    "employer": "OpenTable",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "stackadapt",
+    "employer": "StackAdapt",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "konradgroup",
+    "employer": "Konrad",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "d2l",
+    "employer": "D2L",
+    "kind": "greenhouse",
+    "scope": "Verified Canadian analytical hiring; internship cycle not established by full-time roles."
+  },
+  {
+    "board": "eqbank",
+    "employer": "EQ Bank / Equitable Bank",
+    "kind": "lever"
+  },
+  {
+    "board": "pointclickcare",
+    "employer": "PointClickCare",
+    "kind": "lever"
+  }
+]

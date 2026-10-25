@@ -92,3 +92,29 @@ def test_login_favicon_and_parallel_tabs(client):
  assert a.get('/favicon.ico').status_code==204
  a.get('/login')
  assert a.post('/login',data={'csrf':token,'password':'test-password-123'}).status_code==302
+
+def test_broader_internships_and_real_restrictions():
+ def feed(title,loc='Toronto',text='Available Summer 2027. Undergraduate economics, finance or analytics student.'):
+  return json.dumps({'jobs':[{'id':999,'title':title,'location':{'name':loc},'absolute_url':'https://example.org/fixture','content':text}]})
+ stripe=research.jobs_from_greenhouse(feed('Data Analyst, Intern',text='Economics Bachelor’s students graduating in 2028. SQL skills required.'),'Fixture')
+ assert stripe[0]['recruiting']=='Dates unclear' and stripe[0]['category']=='Data / business analytics'
+ ops=research.jobs_from_greenhouse(feed('Business Systems Intern (Summer 2027)',text='Summer 2027. Must attend a university in Canada. Undergraduate student.'),'Fixture')
+ assert ops[0]['authorization']=='Canadian co-op/enrollment restriction'
+ assert ops[0]['category']=='Operations / business systems'
+ assert not research.jobs_from_greenhouse(feed('Internal Audit Lead'),'Fixture')
+ assert not research.jobs_from_greenhouse(feed('PhD Data Scientist Intern'),'Fixture')
+ assert not research.jobs_from_greenhouse(feed('Risk Analyst Intern Winter 2027'),'Fixture')
+ assert not research.jobs_from_greenhouse(feed('Pricing Intern Summer 2027',loc='Longueuil, Canada'),'Fixture')
+ monitor=research.board_monitor(feed('Senior Pricing Analyst'), 'Fixture','https://example.org/board')
+ assert monitor[0]['recruiting']=='Monitor' and 'not a verified Summer 2027 internship' in monitor[0]['summary']
+
+def test_lever_adapter_preserves_identity():
+ raw=json.dumps([{'id':'fixture-id','text':'Operations Intern Summer 2027','categories':{'location':'Toronto'},'description':'Analyze supply chain data. Summer 2027 undergraduate internship.','lists':[],'hostedUrl':'https://jobs.lever.co/fixture/fixture-id'}])
+ jobs=research.jobs_from_greenhouse(research.lever_as_greenhouse(raw),'Fixture')
+ assert jobs[0]['requisition']=='fixture-id' and jobs[0]['recruiting']=='Confirmed Summer 2027'
+
+def test_canadian_cities_not_namesakes_in_england():
+ assert not research.canadian_cities('Cambridge, Cambridgeshire, England, United Kingdom; London, United Kingdom')
+ assert research.canadian_cities('Cambridge, Ontario, Canada')==['Cambridge']
+ assert research.canadian_cities('Toronto; Vancouver')==['Toronto','Vancouver']
+ assert research.canadian_cities('London, Ontario, Canada')==['London']
