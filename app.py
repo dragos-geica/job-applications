@@ -59,7 +59,10 @@ def create_app(test_config=None):
  @app.get('/api/data')
  def data():
   result={t:store.rows(f'SELECT * FROM {t}') for t in ['contacts','interactions','contact_opportunities','sources','runs','changes']}
-  result['opportunities']=store.rows('SELECT o.*,t.* FROM opportunities o JOIN tracking t ON t.opportunity_id=o.id')
+  result['opportunities']=store.rows('SELECT o.*,t.* FROM opportunities o JOIN tracking t ON t.opportunity_id=o.id WHERE t.deleted=0')
+  visible={j['id'] for j in result['opportunities']}
+  result['changes']=[c for c in result['changes'] if c['opportunity_id'] is None or c['opportunity_id'] in visible]
+  result['contact_opportunities']=[l for l in result['contact_opportunities'] if l['opportunity_id'] in visible]
   settings={r['key']:r['value'] for r in store.rows('SELECT * FROM settings')}
   heartbeat=settings.get('worker_heartbeat');result.update(settings=settings,worker_active=bool(heartbeat and (datetime.now(timezone.utc)-datetime.fromisoformat(heartbeat)).total_seconds()<120),enums=dict(application=APPLICATIONS,outreach=OUTREACH,recruiting=RECRUITING,authorization=AUTH))
   return jsonify(result)
@@ -89,6 +92,12 @@ def create_app(test_config=None):
     oid=insert(c,'opportunities',d);c.execute('INSERT INTO tracking(opportunity_id) VALUES(?)',(oid,))
    return jsonify(id=oid),201
   except Exception:return jsonify(error='Duplicate or invalid opportunity'),400
+ @app.delete('/api/opportunities/<int:oid>')
+ def delete_job(oid):
+  with store.connect() as c:
+   if not c.execute('SELECT 1 FROM tracking WHERE opportunity_id=?',(oid,)).fetchone():abort(404)
+   c.execute('UPDATE tracking SET deleted=1 WHERE opportunity_id=?',(oid,))
+  return jsonify(ok=True)
  @app.patch('/api/opportunities/<int:oid>')
  def edit_job(oid):
   d=payload('opportunities')
@@ -161,7 +170,7 @@ def create_app(test_config=None):
  @app.get('/api/export/<table>.csv')
  def export(table):
   if table not in ('opportunities','contacts','interactions'):abort(404)
-  data=store.rows('SELECT o.*,t.* FROM opportunities o JOIN tracking t ON o.id=t.opportunity_id') if table=='opportunities' else store.rows(f'SELECT * FROM {table}')
+  data=store.rows('SELECT o.*,t.* FROM opportunities o JOIN tracking t ON o.id=t.opportunity_id WHERE t.deleted=0') if table=='opportunities' else store.rows(f'SELECT * FROM {table}')
   s=io.StringIO();w=csv.writer(s)
   if data:
    w.writerow(data[0].keys())
