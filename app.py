@@ -174,7 +174,7 @@ if __name__=='__main__':
   store.init();p=getpass.getpass('New private app password (12+ characters): ')
   if len(p)<12:raise SystemExit('Use at least 12 characters')
   path=Path(store.DB).parent/'password.hash'
-  with open(path,'w',opener=lambda path,flags:os.open(path,flags,0o600)) as f:f.write(generate_password_hash(p))
+  with open(path,'w',opener=lambda path,flags:os.open(path,flags,0o600)) as f:f.write(generate_password_hash(p,method='pbkdf2:sha256:1000000'))
   print('Password configured. Existing sessions expire within 12 hours.')
  else:
   from waitress import serve

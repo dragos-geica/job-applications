@@ -5,47 +5,43 @@ Private single-user internship research and application workspace for Dragoș Ge
 
 The cloud workspace and your Mac are separate computers. The `/workspace/...` folder exists only in the cloud. Downloading this repository gives your Mac the app code; your cloud password and private database are deliberately not included.
 
-1. Install Python **3.12 or newer** from [python.org](https://www.python.org/downloads/macos/) if it is not already installed. This is a one-time step.
-2. On GitHub, select the **main** branch, then **Code → Download ZIP**. Open the downloaded ZIP and keep the extracted `job-applications-main` folder in **Downloads**. If you downloaded an older copy that only contains a README, download it again.
-3. Open your Mac's **Terminal**. Paste these commands, then press Enter:
+1. Download the updated repository: on GitHub select **main → Code → Download ZIP**, then extract it into Downloads. Rename the newly extracted folder **Northbound**. Keep your old folder as a backup; do not overwrite an existing `data` directory if you have already saved records.
+2. Open **Terminal** and paste:
+
+```sh
+cd ~/Downloads/Northbound
+bash start.command
+```
+
+The launcher supports **Python 3.9 and newer**, including the Python 3.9 used by many Macs. It installs compatible dependencies, asks you to choose a password on the first run (at least 12 characters), checks initial research sources, and starts the app and its weekly research worker. Password typing is invisible in Terminal; press Enter when finished. If Python is missing, install Python 3.12 from [python.org](https://www.python.org/downloads/macos/).
+
+3. When the terminal says to open the app, visit **http://127.0.0.1:8000** in Safari or Chrome on **this Mac**, and sign in. This address is private to your own computer.
+
+Leave Terminal open. Press **Control+C** to stop both the app and worker. The same two commands start it again later without resetting your password or personal data. Weekly research requires the Mac to be awake and online; for research while it is off, use an always-on host.
+
+### Recover from the old `click==8.5.0` installation error
+
+The older lockfile required packages that do not support Python 3.9. The lockfile has now been resolved and tested for Python 3.9 and newer. The `No module named flask`, `bs4` and `requests` errors were consequences of the failed install, not missing app files. You do not need to delete your database, password or virtual environment.
+
+For an **already downloaded copy**, this immediate recovery uses the existing top-level requirements file, letting pip choose transitive dependencies compatible with your Python:
 
 ```sh
 cd ~/Downloads/job-applications-main
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.lock
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Wait until installation finishes successfully. If it fails, stop and share that error before running the app. Then set your password **only if you have not set one yet**, and run these commands one at a time:
+
+```sh
 .venv/bin/python app.py --set-password
 .venv/bin/python seed_research.py
 .venv/bin/python research.py --once
 .venv/bin/python app.py
 ```
 
-When asked for a password, choose at least 12 characters. Terminal hides the letters while you type; this is normal. Press Enter when finished. If `python3` reports an older version despite installing Python 3.12, use `python3.12` for the first command that creates the virtual environment.
+For this old-copy recovery, start `.venv/bin/python research.py` in a second Terminal window if you want the weekly worker. The updated `start.command` starts it automatically.
 
-4. Leave Terminal running. On **your Mac**, open **http://127.0.0.1:8000** in Safari or Chrome and sign in with the password you just chose. This address works only on the computer running the app; it is not a public website.
-
-The initial research can take a few minutes. A failed source does not prevent you from using the tracker; see **Settings & sources** for diagnostics. A fresh Mac database starts independently from the cloud database. Use JSON backup/restore in the app if you want to transfer records; do not put backups or passwords on GitHub.
-
-### Start again later
-
-You only need these commands in Terminal:
-
-```sh
-cd ~/Downloads/job-applications-main
-.venv/bin/python app.py
-```
-
-Open the same browser address and sign in. Your data is retained in the folder's `data` directory. Do not delete this folder or replace it with a fresh ZIP without first saving a JSON backup. Press **Control+C** in Terminal to stop the app.
-
-### Enable weekly research on your Mac
-
-Open a **second Terminal window**, paste these commands, and leave it running:
-
-```sh
-cd ~/Downloads/job-applications-main
-.venv/bin/python research.py
-```
-
-Weekly runs require your Mac to be awake, connected to the Internet, and running this worker. For updates while your Mac is off, use an always-on host as described below. You can also use **Refresh research** in the app at any time.
+A fresh Mac database starts independently from the cloud database. Use JSON backup/restore in the app to transfer records; never put backups or passwords on GitHub. Initial research may take a few minutes. Failed sources are visible in **Settings & sources** and do not prevent manual tracking.
 
 ### Start in the existing cloud development environment
 
