@@ -113,3 +113,11 @@ Bank, insurer, and several professional-services sites were blocked by cloud net
 ### Remove an unsuitable posting
 
 Open the posting and click **Delete posting**, then confirm. It disappears from your opportunities, applications, digest and contact links. The removal is saved locally and survives research updates and backup/restore. In the Pages version it applies only to your current browser; it does not delete the shared research catalogue for other visitors. Contacts and their interaction history are retained.
+
+### Recruitment contacts
+
+Each record has a Recruitment Contact field. The detail panel shows contact scope, source evidence, last successful contact verification and failed checks. Contact verification never refreshes the posting's own verification date. Manual corrections through the detail form are labeled as manually entered; browser overrides are preserved through public research updates.
+
+`recruitment_sources.json` defines the company career pages and official boards searched during each weekly run, plus individually reviewed contacts. Verified internship inboxes take priority over a general recruiting inbox; named recruiter fallbacks require a published work email and evidence of their recruiting role. Email addresses are never guessed. Accommodation, privacy, reference-submission and security-reporting addresses are excluded from general internship inquiries. Published recruiting inboxes can still have unconfirmed Canadian/internship scope, which is stated in the detail panel. Inaccessible sources and missing public contacts remain explicit research gaps, not invented contacts.
+
+Francophone Mobility eligibility and employer participation are separate questions. Ask whether the employer can support the pathway, and describe eligibility as confirmed only when it has been verified.

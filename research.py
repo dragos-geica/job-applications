@@ -11,7 +11,8 @@ CITIES=['Mississauga','Markham','Burnaby','Richmond','Oakville','Burlington','Ca
 HEADERS={'User-Agent':'InternshipTracker/1.0 (personal research; weekly checks)'}
 def fetch(url):
  # Only public HTTPS source hosts approved in code. Redirects must remain on that list.
- allowed={'www.analysisgroup.com','www.nera.com','www.crai.com','www.compasslexecon.com','www.brattle.com','www.bankofcanada.ca','www.canada.ca','boards-api.greenhouse.io','api.lever.co'}
+ contact_hosts={urlparse(url).hostname for entry in json.loads((Path(__file__).parent/'recruitment_sources.json').read_text()).values() for url in entry['sources']}
+ allowed=contact_hosts | {'www.analysisgroup.com','www.nera.com','www.crai.com','www.compasslexecon.com','www.brattle.com','www.bankofcanada.ca','www.canada.ca','boards-api.greenhouse.io','api.lever.co'}
  for _ in range(5):
   p=urlparse(url)
   if p.scheme!='https' or p.hostname not in allowed or p.username or p.port not in (None,443):raise ValueError('Source host is not approved')
@@ -177,7 +178,9 @@ def refresh():
    except Exception as e:
     failures+=1
     with store.connect() as c:c.execute('INSERT INTO changes(opportunity_id,at,field,current) VALUES(?,?,?,?)',(job['id'],store.now(),'verification failed',str(e)[:500]))
-  with store.connect() as c:c.execute('UPDATE runs SET finished=?,status=?,summary=? WHERE id=?',(store.now(),'Partial' if failures else 'Complete',f'{checked} sources verified; {discovered} posting observations; {failures} failed checks. Coverage is bounded; JS-only boards and contacts require manual research.',rid))
+  import recruitment
+  contact_count,contact_gaps=recruitment.refresh_contacts(fetch)
+  with store.connect() as c:c.execute('UPDATE runs SET finished=?,status=?,summary=? WHERE id=?',(store.now(),'Partial' if failures or contact_gaps else 'Complete',f'{checked} sources verified; {discovered} posting observations; {failures} failed posting checks; recruiting contacts verified for {contact_count} employers, {contact_gaps} employer contact checks incomplete. Coverage is bounded; JS-only boards and contacts require manual research.',rid))
   return rid
 
 def worker():

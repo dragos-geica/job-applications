@@ -131,3 +131,37 @@ def test_deleted_posting_stays_deleted_after_research(client):
  assert backup['tables']['tracking'][0]['deleted']==1
  assert client.post('/api/restore',json=backup).status_code==200
  assert client.get('/api/data').json['opportunities']==[]
+
+def test_recruitment_contacts_priority_and_failed_verification(client,tmp_path,monkeypatch):
+ import recruitment
+ oid=job(client)
+ config=tmp_path/'contacts.json';config.write_text(json.dumps({'Fixture firm':{'sources':['https://example.org/careers'],'approved':[{'name':'Intern recruiting','email':'internships@example.org','type':'internship inbox','source':'https://example.org/careers','scope':'Internship inquiries'}]}}))
+ monkeypatch.setattr(recruitment,'CONFIG',config)
+ def fetch(url):return '<p>Our internship recruitment team welcomes questions at internships@example.org. '+('Details about student recruiting and applications. '*6)+'</p>'
+ assert recruitment.refresh_contacts(fetch)==(1,0)
+ d=client.get('/api/data').json['opportunities'][0];assert d['recruitment_contact']=='internships@example.org'
+ stamp=json.loads(d['recruitment_contact_details'])['last_verified']
+ assert d['last_verified'] is None # Contact verification never verifies the posting.
+ recruitment.refresh_contacts(lambda url: (_ for _ in ()).throw(TimeoutError()))
+ d=client.get('/api/data').json['opportunities'][0];meta=json.loads(d['recruitment_contact_details'])
+ assert d['recruitment_contact']=='internships@example.org' and meta['last_verified']==stamp and meta['status'].startswith('Stale')
+
+def test_recruitment_does_not_repurpose_restricted_emails():
+ import recruitment
+ assert not recruitment.extract_inboxes('For disability accommodations, email recruitment@example.org.', 'https://example.org/jobs')
+ assert not recruitment.extract_inboxes('References must be sent to recruiting@example.org. No other application materials accepted.', 'https://example.org/jobs')
+ assert not recruitment.extract_inboxes('Contact privacy@example.org about personal data.', 'https://example.org/jobs')
+ assert recruitment.extract_inboxes('Questions about campus recruiting? Contact campus-recruiting@example.org for internship queries.', 'https://example.org/careers')
+ assert not recruitment.extract_inboxes('Our recruiter Alex works here. Email formats are firstname.lastname@example.org.', 'https://example.org/careers')
+
+def test_recruitment_fallback_limit_and_inbox_priority(client,tmp_path,monkeypatch):
+ import recruitment
+ job(client);url='https://example.org/team'
+ people=[{'name':f'Fixture recruiter {i}','email':f'person{i}@example.org','type':'recruiter','source':url,'scope':'Verified test fixture'} for i in range(3)]
+ path=tmp_path/'sources.json';path.write_text(json.dumps({'Fixture firm':{'sources':[url],'approved':people}}));monkeypatch.setattr(recruitment,'CONFIG',path)
+ text='Recruiting team: '+' '.join(p['email'] for p in people)+' '+('Team biographies and recruiting role evidence. '*8)
+ recruitment.refresh_contacts(lambda u:text)
+ d=client.get('/api/data').json['opportunities'][0];assert len(json.loads(d['recruitment_contact_details'])['contacts'])==2
+ inbox={'name':'Intern recruiting','email':'internships@example.org','type':'internship inbox','source':url,'scope':'Internship inquiries'}
+ path.write_text(json.dumps({'Fixture firm':{'sources':[url],'approved':people+[inbox]}}));recruitment.refresh_contacts(lambda u:text+' internships@example.org')
+ d=client.get('/api/data').json['opportunities'][0];assert d['recruitment_contact']=='internships@example.org'

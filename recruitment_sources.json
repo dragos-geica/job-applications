@@ -1,0 +1,216 @@
+{
+  "Analysis Group": {
+    "sources": [
+      "https://www.analysisgroup.com/careers/career-path/summer-analyst-intern/"
+    ],
+    "approved": [
+      {
+        "name": "Analyst recruiting team",
+        "email": "analyst.recruiter@analysisgroup.com",
+        "type": "internship inbox",
+        "source": "https://www.analysisgroup.com/careers/career-path/summer-analyst-intern/",
+        "scope": "Published on the Summer Analyst Intern program page. Specific Canadian office and permit support are not confirmed."
+      }
+    ],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Brattle": {
+    "sources": [
+      "https://www.brattle.com/careers/faqs/",
+      "https://www.brattle.com/careers/recruiting-events/",
+      "https://www.brattle.com/people/",
+      "https://boards-api.greenhouse.io/v1/boards/thebrattlegroup/jobs?content=true"
+    ],
+    "approved": [
+      {
+        "name": "Recruiting team",
+        "email": "Recruiting@Brattle.com",
+        "type": "recruiting inbox",
+        "source": "https://www.brattle.com/careers/faqs/",
+        "scope": "Listed in the official interview FAQ as a recruiting correspondence address. General internship inquiry coverage is unconfirmed. A separate posting says not to send application materials to this address."
+      }
+    ],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Bank of Canada": {
+    "sources": [
+      "https://www.bankofcanada.ca/careers/students/",
+      "https://www.bankofcanada.ca/careers/working-here/"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "AlixPartners": {
+    "sources": [
+      "https://www.alixpartners.com/careers/",
+      "https://www.alixpartners.com/careers/students/",
+      "https://boards-api.greenhouse.io/v1/boards/alixpartners/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Asana": {
+    "sources": [
+      "https://asana.com/jobs",
+      "https://asana.com/jobs/university",
+      "https://boards-api.greenhouse.io/v1/boards/asana/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Block": {
+    "sources": [
+      "https://block.xyz/careers",
+      "https://boards-api.greenhouse.io/v1/boards/block/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Brex": {
+    "sources": [
+      "https://www.brex.com/careers",
+      "https://boards-api.greenhouse.io/v1/boards/brex/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "D2L": {
+    "sources": [
+      "https://www.d2l.com/careers/",
+      "https://www.d2l.com/careers/students/",
+      "https://boards-api.greenhouse.io/v1/boards/d2l/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "EQ Bank / Equitable Bank": {
+    "sources": [
+      "https://www.equitablebank.ca/careers",
+      "https://api.lever.co/v0/postings/eqbank?mode=json"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Faire": {
+    "sources": [
+      "https://www.faire.com/careers",
+      "https://boards-api.greenhouse.io/v1/boards/faire/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Fivetran": {
+    "sources": [
+      "https://www.fivetran.com/careers",
+      "https://boards-api.greenhouse.io/v1/boards/fivetran/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Konrad": {
+    "sources": [
+      "https://www.konrad.com/careers",
+      "https://www.konrad.com/contact",
+      "https://boards-api.greenhouse.io/v1/boards/konradgroup/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Lyft": {
+    "sources": [
+      "https://www.lyft.com/careers/university",
+      "https://www.lyft.com/careers",
+      "https://boards-api.greenhouse.io/v1/boards/lyft/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "MongoDB": {
+    "sources": [
+      "https://www.mongodb.com/company/careers/students-and-graduates",
+      "https://boards-api.greenhouse.io/v1/boards/mongodb/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Okta": {
+    "sources": [
+      "https://www.okta.com/company/careers/",
+      "https://www.okta.com/company/careers/university-recruiting/",
+      "https://boards-api.greenhouse.io/v1/boards/okta/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "OpenTable": {
+    "sources": [
+      "https://www.opentable.com/careers/",
+      "https://boards-api.greenhouse.io/v1/boards/opentable/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Pinterest": {
+    "sources": [
+      "https://www.pinterestcareers.com/early-career/",
+      "https://www.pinterestcareers.com/",
+      "https://boards-api.greenhouse.io/v1/boards/pinterest/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "PointClickCare": {
+    "sources": [
+      "https://pointclickcare.com/careers/",
+      "https://api.lever.co/v0/postings/pointclickcare?mode=json"
+    ],
+    "approved": [],
+    "notes": "Published recruitment mailbox appears in accommodation and personal-data request contexts; not verified for internship expressions of interest.",
+    "excluded": [
+      "recruitment@pointclickcare.com"
+    ]
+  },
+  "Ripple": {
+    "sources": [
+      "https://ripple.com/careers/",
+      "https://boards-api.greenhouse.io/v1/boards/ripple/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Robinhood": {
+    "sources": [
+      "https://careers.robinhood.com/",
+      "https://careers.robinhood.com/early-talent/",
+      "https://boards-api.greenhouse.io/v1/boards/robinhood/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Samsara": {
+    "sources": [
+      "https://www.samsara.com/company/careers/",
+      "https://www.samsara.com/company/careers/university/",
+      "https://boards-api.greenhouse.io/v1/boards/samsara/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "StackAdapt": {
+    "sources": [
+      "https://www.stackadapt.com/careers",
+      "https://boards-api.greenhouse.io/v1/boards/stackadapt/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "Stripe": {
+    "sources": [
+      "https://stripe.com/jobs/university",
+      "https://stripe.com/jobs",
+      "https://boards-api.greenhouse.io/v1/boards/stripe/jobs?content=true"
+    ],
+    "approved": [],
+    "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  }
+}
