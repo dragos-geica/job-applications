@@ -1,0 +1,17 @@
+[Unit]
+Description=Northbound Monday research worker
+After=network-online.target
+[Service]
+User=northbound
+WorkingDirectory=/srv/northbound
+Environment=DATABASE_PATH=/srv/northbound/data/tracker.sqlite3
+ExecStart=/srv/northbound/.venv/bin/python research.py
+Restart=on-failure
+RestartSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/srv/northbound/data
+[Install]
+WantedBy=multi-user.target
