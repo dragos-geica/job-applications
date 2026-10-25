@@ -35,6 +35,30 @@ def extract_inboxes(text,url):
   result.append(dict(name='Recruiting inbox',email=address,type='recruiting inbox',source=url,scope='Published recruiting channel. Specific internship, Canadian-office and unsolicited-inquiry coverage is unconfirmed.',evidence=context))
  return result
 
+def extract_recruiters(raw,url,employer):
+ """Only explicit public Person records with employer, role, name and work email."""
+ soup=BeautifulSoup(raw,'html.parser');people=[]
+ def visit(value):
+  if isinstance(value,list):
+   for x in value:visit(x)
+  elif isinstance(value,dict):
+   if value.get('@type')=='Person':people.append(value)
+   for x in value.values():
+    if isinstance(x,(dict,list)):visit(x)
+ for node in soup.find_all('script',type='application/ld+json'):
+  try:visit(json.loads(node.string or node.get_text()))
+  except (ValueError,TypeError):pass
+ normalize=lambda x:re.sub(r'[^a-z0-9]','',str(x).lower())
+ result=[]
+ for person in people:
+  company=person.get('worksFor',{});company=company.get('name','') if isinstance(company,dict) else company
+  email=str(person.get('email','')).removeprefix('mailto:')
+  if normalize(company)!=normalize(employer) or not person.get('name') or not EMAIL.fullmatch(email):continue
+  if not re.search(r'recruit|talent acquisition',str(person.get('jobTitle','')),re.I):continue
+  if re.search(r'privacy|accommodat|disabilit',str(person.get('jobTitle','')),re.I):continue
+  result.append(dict(name=person['name'],email=email,type='recruiter',source=url,scope=str(person['jobTitle'])+'; published employer affiliation verified. Canadian internship responsibility unconfirmed.'))
+ return result
+
 def refresh_contacts(fetch):
  config=json.loads(CONFIG.read_text());employers=store.rows('SELECT DISTINCT employer FROM opportunities');stamp=store.now()
  def check(row):
@@ -47,7 +71,8 @@ def refresh_contacts(fetch):
     docs.append(url)
     for c in entry.get('approved',[]):
      if c['source']==url and any(c['email'].lower() in t.lower() for t in documents_):valid.append(c)
-    if not valid:
+    valid.extend(extract_recruiters(text,url,employer))
+    if not any(c['type']!='recruiter' for c in valid):
      for t in documents_:valid.extend(extract_inboxes(t,url))
    except Exception:failures.append(url)
   # Prefer an approved internship inbox. Recruiter fallback must be individually

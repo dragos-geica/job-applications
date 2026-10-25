@@ -165,3 +165,12 @@ def test_recruitment_fallback_limit_and_inbox_priority(client,tmp_path,monkeypat
  inbox={'name':'Intern recruiting','email':'internships@example.org','type':'internship inbox','source':url,'scope':'Internship inquiries'}
  path.write_text(json.dumps({'Fixture firm':{'sources':[url],'approved':people+[inbox]}}));recruitment.refresh_contacts(lambda u:text+' internships@example.org')
  d=client.get('/api/data').json['opportunities'][0];assert d['recruitment_contact']=='internships@example.org'
+
+def test_named_recruiter_needs_explicit_affiliation_and_email():
+ import recruitment
+ person={'@type':'Person','name':'Fixture recruiter','jobTitle':'Talent Acquisition Partner','email':'fixture@example.org','worksFor':{'name':'Fixture firm'}}
+ html='<script type="application/ld+json">'+json.dumps(person)+'</script>'
+ assert recruitment.extract_recruiters(html,'https://example.org/team','Fixture firm')[0]['name']=='Fixture recruiter'
+ assert not recruitment.extract_recruiters(html,'https://example.org/team','Other firm')
+ person.pop('email');html='<script type="application/ld+json">'+json.dumps(person)+'</script>'
+ assert not recruitment.extract_recruiters(html,'https://example.org/team','Fixture firm')
