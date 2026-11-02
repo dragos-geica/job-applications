@@ -212,5 +212,40 @@
     ],
     "approved": [],
     "notes": "Company-wide contact research; Canadian undergraduate internship coverage is not confirmed."
+  },
+  "IMCO": {
+    "sources": [
+      "https://www.imcoinvest.com/student-internship.html",
+      "https://imcoinvest.wd3.myworkdayjobs.com/IMCO/job/Toronto---16-York-St/Intern--Total-Portfolio-and-Capital-Markets--Summer-2027-_R26-152",
+      "https://imcoinvest.wd3.myworkdayjobs.com/IMCO/job/Toronto---16-York-St/Intern--Enterprise-Transformation-and-AI-Strategy--Summer-2027-_R26-155-1",
+      "https://imcoinvest.wd3.myworkdayjobs.com/IMCO/job/Toronto---16-York-St/Intern--Continuous-Improvement---Transformation_R26-147",
+      "https://imcoinvest.wd3.myworkdayjobs.com/IMCO/job/Toronto---16-York-St/Intern--Total-Portfolio---Strategic-Initiatives--Summer-2027-_R26-157",
+      "https://imcoinvest.wd3.myworkdayjobs.com/IMCO/job/Toronto---16-York-St/Intern--Real-Estate_R26-149"
+    ],
+    "approved": [],
+    "notes": "Verified official Summer 2027 sources checked November 2, 2026. C16 participation and recruiter emails are not inferred. Inaccessible/JS-only sources must retain prior successful facts."
+  },
+  "Agentis Capital": {
+    "sources": [
+      "https://www.agentiscapital.com/careers/internships/summer-analyst-2027"
+    ],
+    "approved": [],
+    "notes": "Verified official Summer 2027 sources checked November 2, 2026. C16 participation and recruiter emails are not inferred. Inaccessible/JS-only sources must retain prior successful facts."
+  },
+  "CMHC": {
+    "sources": [
+      "https://careers.cmhc-schl.gc.ca/job/Ottawa-Summer-2027-Internship-Finance%2C-Accounting-and-Economics/607196017/",
+      "https://careers.cmhc-schl.gc.ca/job/Montr%C3%A9al-Summer-2027-Internship-Data-Analytics-%26-Modelling/607330717/",
+      "https://careers.cmhc-schl.gc.ca/job/Ottawa-Summer-2027-Internship-Process-Design-and-Optimization-%26-Project-Coordination/607323517/"
+    ],
+    "approved": [],
+    "notes": "Verified official Summer 2027 sources checked November 2, 2026. C16 participation and recruiter emails are not inferred. Inaccessible/JS-only sources must retain prior successful facts."
+  },
+  "Mott MacDonald": {
+    "sources": [
+      "https://apply.mottmac.com/job/Vancouver-Advisory-Internship-2027-Brit/1369458957/"
+    ],
+    "approved": [],
+    "notes": "Verified official Summer 2027 sources checked November 2, 2026. C16 participation and recruiter emails are not inferred. Inaccessible/JS-only sources must retain prior successful facts."
   }
 }
